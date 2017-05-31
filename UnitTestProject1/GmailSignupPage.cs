@@ -14,16 +14,16 @@ namespace SeleniumTest
 {
     public class GmailSignupPage
     {
-        IWebDriver driver = new ChromeDriver(@"C:\Selenium");
+        IWebDriver driver;
         string url = @"https://accounts.google.com/SignUp?";
   
-
-        public GmailSignupPage(IWebDriver browser)
+        public GmailSignupPage(IWebDriver driver)
         {
-            this.driver = browser;
+            this.driver = driver;
             driver.Navigate().GoToUrl(url);
             driver.Manage().Window.Maximize();
-            PageFactory.InitElements(browser, this);
+            PageFactory.InitElements(driver, this);
+            driver.Manage().Window.Maximize();
         }
 
         [FindsBy (How = How.Name, Using = "FirstName")]

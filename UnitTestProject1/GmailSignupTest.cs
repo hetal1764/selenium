@@ -12,7 +12,8 @@ namespace SeleniumTest
     [TestClass]
     public class GmailSignupTest
         {
-        IWebDriver driverGC = new ChromeDriver(@"C:/Selenium");
+        IWebDriver driver = new ChromeDriver(@"C:/Selenium");
+        private GmailSignupPage gmailPage;
 
 
         [TestMethod]
@@ -30,14 +31,20 @@ namespace SeleniumTest
             String firstName = "Test" + prefix;
             string password = "Test!23456";
 
-            GmailSignupPage gmailPage = new GmailSignupPage(driverGC);
+            //GmailSignupPage gmailPage = new GmailSignupPage(driver);
+            gmailPage = new GmailSignupPage(driver);
+
             gmailPage.firstName.SendKeys("John");
             gmailPage.lastName.SendKeys("Smith");
+
+            //Validate Email address field with invalid email addresses
             gmailPage.ValidateEmail("");
             gmailPage.ValidateEmail(".test.com");
             gmailPage.ValidateEmail("email@domain@domain.com");
             gmailPage.ValidateEmail("test123@domain.com");
             gmailPage.gmailAddress.Clear();
+
+            //Enter valid email address
             gmailPage.gmailAddress.SendKeys("Test4534534534" + prefix);
             gmailPage.passwd.SendKeys(password);
             gmailPage.passwdAgain.SendKeys(password);
@@ -52,17 +59,17 @@ namespace SeleniumTest
             gmailPage.submitButton.Click();
 
             //Scroll and click on I Agree button in Privacy dialog
-            IWebElement scroll = driverGC.FindElement(By.Id("tos-scroll"));
+            IWebElement scroll = driver.FindElement(By.Id("tos-scroll"));
             scroll.SendKeys(Keys.PageDown);
             scroll.SendKeys(Keys.PageDown);
 
             TimeSpan t = new TimeSpan(0, 0, 5);
-            WebDriverWait wait = new WebDriverWait(driverGC, t);
+            WebDriverWait wait = new WebDriverWait(driver, t);
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("iagreebutton")));
-            driverGC.FindElement(By.Id("iagreebutton")).Click();
+            driver.FindElement(By.Id("iagreebutton")).Click();
 
             // Closing the browser
-            driverGC.Close();
+            driver.Close();
         }
 
     }

@@ -13,18 +13,16 @@ namespace SeleniumTest
 {
     public class GmailLoginPage
     {
-        IWebDriver driver = new ChromeDriver(@"C:\Selenium");
-        string url = @"https://gmail.com/";
-
-        public GmailLoginPage(IWebDriver browser)
+        IWebDriver driver;
+        public GmailLoginPage(IWebDriver driver)
         {
-            this.driver = browser;
+            string url = @"https://gmail.com/";
+            this.driver = driver;
             driver.Navigate().GoToUrl(url);
-            PageFactory.InitElements(browser, this);
+            PageFactory.InitElements(driver, this);
+            driver.Manage().Window.Maximize();
         }
 
-        [FindsBy (How = How.CssSelector, Using = "#identifierLink>div.vdE7Oc.f3GIQ>p")]
-        public IWebElement UseAnotherAccount { get; set; }
 
         [FindsBy(How = How.Id, Using = "identifierId")]
         public IWebElement username;
